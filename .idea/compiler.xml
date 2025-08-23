@@ -8,12 +8,14 @@
         <outputRelativeToContentRoot value="true" />
         <module name="School-Service" />
         <module name="Student-Service" />
+        <module name="Student-Management-Crud" />
       </profile>
     </annotationProcessing>
   </component>
   <component name="JavacSettings">
     <option name="ADDITIONAL_OPTIONS_OVERRIDE">
       <module name="School-Service" options="-parameters" />
+      <module name="Student-Management-Crud" options="-parameters" />
       <module name="Student-Service" options="-parameters" />
     </option>
   </component>

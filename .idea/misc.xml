@@ -6,6 +6,9 @@
       <list>
         <option value="$PROJECT_DIR$/School-Service/pom.xml" />
         <option value="$PROJECT_DIR$/Student-Service/pom.xml" />
+        <option value="$PROJECT_DIR$/OpenFeign/School-Service/pom.xml" />
+        <option value="$PROJECT_DIR$/OpenFeign/Student-Service/pom.xml" />
+        <option value="$PROJECT_DIR$/Student-Management-Crud/Student-Management-Crud/pom.xml" />
       </list>
     </option>
   </component>
