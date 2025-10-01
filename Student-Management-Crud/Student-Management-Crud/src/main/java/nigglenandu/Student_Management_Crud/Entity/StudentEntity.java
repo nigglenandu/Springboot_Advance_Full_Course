@@ -5,15 +5,21 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 
+// Marks this class as a JPA Entity (table in DB will be created for this class)
 @Entity
 public class StudentEntity {
+
+    // Primary key of the table
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.AUTO) // Auto-increment ID
     private long id;
+
+    // Other fields/columns of the table
     private String studentName;
     private int grade;
     private String gender;
 
+    // Parameterized constructor (used when we want to create an object with values)
     public StudentEntity(String gender, String studentName, long id, int grade) {
         this.gender = gender;
         this.studentName = studentName;
@@ -21,6 +27,11 @@ public class StudentEntity {
         this.grade = grade;
     }
 
+    // Default constructor (required by JPA)
+    public StudentEntity() {
+    }
+
+    // Getters and setters → allow access to private fields
     public String getStudentName() {
         return studentName;
     }
