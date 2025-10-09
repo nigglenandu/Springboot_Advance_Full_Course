@@ -1,7 +1,11 @@
 package MicroServicesEg.Student_Service;
 
+// This interface defines the methods that the service layer must implement
 public interface IStudentService {
-    Student getStudentById(Long id);
-    void saveStudent(Student student);
 
+    // Method to fetch a student by their ID
+    Student getStudentById(Long id);
+
+    // Method to save a new student record to the database
+    void saveStudent(Student student);
 }
