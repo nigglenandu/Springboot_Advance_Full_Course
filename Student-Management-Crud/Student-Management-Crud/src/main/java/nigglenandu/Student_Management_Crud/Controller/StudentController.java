@@ -1,56 +1,56 @@
 package nigglenandu.Student_Management_Crud.Controller;
 
+import lombok.RequiredArgsConstructor;
 import nigglenandu.Student_Management_Crud.Entity.StudentEntity;
 import nigglenandu.Student_Management_Crud.Service.IStudentService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-// Marks this class as a REST controller → it handles HTTP requests and responses
-@RestController
-@RequestMapping("/api/students")  // Base URL for all student-related endpoints
+@RestController // Marks this class as a REST controller (JSON responses)
+@RequestMapping("/api/students") // Base URL for all student endpoints
+@RequiredArgsConstructor // Lombok generates constructor for final fields
 public class StudentController {
 
-    // Injects service layer dependency (for business logic)
-    @Autowired
-    private IStudentService studentService;
+    private final IStudentService studentService; // Inject service layer
 
-    // GET → Fetch all students
+    // ✅ CREATE: Add a new student
+    @PostMapping
+    public ResponseEntity<StudentEntity> createStudent(@RequestBody StudentEntity student) {
+        // Request body is automatically converted to StudentEntity
+        return ResponseEntity.status(HttpStatus.CREATED)
+                .body(studentService.createStudent(student)); // Returns created student with 201 status
+    }
+
+    // ✅ READ ALL: Get list of all students
     @GetMapping
     public ResponseEntity<List<StudentEntity>> getAllStudents() {
-        // returns list of students with HTTP 200 OK
-        return new ResponseEntity<>(studentService.getAllStudents(), HttpStatus.OK);
+        return ResponseEntity.ok(studentService.getAllStudents()); // 200 OK with list
     }
 
-    // GET → Fetch a student by ID
+    // ✅ READ BY ID: Get a student by ID
     @GetMapping("/{id}")
     public ResponseEntity<StudentEntity> getStudentById(@PathVariable Long id) {
-        // returns student by ID with HTTP 200 OK
-        return new ResponseEntity<>(studentService.getStudentById(id), HttpStatus.OK);
+        return studentService.getStudentById(id)
+                .map(ResponseEntity::ok) // If student found, return 200 OK with student
+                .orElse(ResponseEntity.notFound().build()); // Else 404 Not Found
     }
 
-    // POST → Create new student
-    @PostMapping
-    public ResponseEntity<String> createStudent(@RequestBody StudentEntity student) {
-        // saves student in DB
-        studentService.saveStudent(student);
-        return new ResponseEntity<>("Student created successfully!", HttpStatus.CREATED);
-    }
-
-    // PUT → Update student by ID
+    // ✅ UPDATE: Update student details by ID
     @PutMapping("/{id}")
-    public ResponseEntity<Boolean> updateStudent(@PathVariable Long id, @RequestBody StudentEntity student) {
-        // updates student info and returns true/false
-        return new ResponseEntity<>(studentService.updateStudent(id, student), HttpStatus.OK);
+    public ResponseEntity<StudentEntity> updateStudent(@PathVariable Long id, @RequestBody StudentEntity student) {
+        return studentService.updateStudent(id, student)
+                .map(ResponseEntity::ok) // Return updated student if found
+                .orElse(ResponseEntity.notFound().build()); // Else 404 Not Found
     }
 
-    // DELETE → Remove student by ID
+    // ✅ DELETE: Delete a student by ID
     @DeleteMapping("/{id}")
-    public ResponseEntity<Boolean> deleteStudent(@PathVariable Long id) {
-        // deletes student by ID and returns true/false
-        return new ResponseEntity<>(studentService.deleteStudentById(id), HttpStatus.OK);
+    public ResponseEntity<Void> deleteStudent(@PathVariable Long id) {
+        return studentService.deleteStudent(id)
+                ? ResponseEntity.noContent().build() // 204 No Content if deleted
+                : ResponseEntity.notFound().build(); // 404 if student not found
     }
 }

@@ -1,23 +1,53 @@
 package nigglenandu.Student_Management_Crud.Service;
 
 import nigglenandu.Student_Management_Crud.Entity.StudentEntity;
-import java.util.List;
 
-// This interface defines the methods for student-related operations
+import java.util.List;
+import java.util.Optional;
+
+/**
+ * IStudentService (Interface)
+ * ---------------------------
+ * This interface defines all the methods (operations)
+ * that can be performed on the StudentEntity.
+ *
+ * Think of it like a *contract* — it only declares
+ * what should be done, not how it is done.
+ */
 public interface IStudentService {
 
-    // Get all student records from the database
+    /**
+     * Create a new student and save it to the database.
+     * @param student - student object to be created
+     * @return the saved student
+     */
+    StudentEntity createStudent(StudentEntity student);
+
+    /**
+     * Get a list of all students.
+     * @return list of students
+     */
     List<StudentEntity> getAllStudents();
 
-    // Get a single student record by its ID
-    StudentEntity getStudentById(Long id);
+    /**
+     * Find a student by ID.
+     * @param id - student ID
+     * @return Optional containing student if found, or empty if not
+     */
+    Optional<StudentEntity> getStudentById(Long id);
 
-    // Save a new student to the database
-    void saveStudent(StudentEntity student);
+    /**
+     * Update student details using ID.
+     * @param id - student ID
+     * @param student - student object with updated info
+     * @return Optional containing updated student if found
+     */
+    Optional<StudentEntity> updateStudent(Long id, StudentEntity student);
 
-    // Update an existing student by ID
-    boolean updateStudent(Long id, StudentEntity student);
-
-    // Delete a student record by ID
-    boolean deleteStudentById(Long id);
+    /**
+     * Delete a student using ID.
+     * @param id - student ID
+     * @return true if deleted successfully, false otherwise
+     */
+    boolean deleteStudent(Long id);
 }

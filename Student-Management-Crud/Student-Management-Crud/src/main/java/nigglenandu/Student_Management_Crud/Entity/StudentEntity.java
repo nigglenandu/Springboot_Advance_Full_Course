@@ -1,66 +1,31 @@
 package nigglenandu.Student_Management_Crud.Entity;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
-// Marks this class as a JPA Entity (table in DB will be created for this class)
-@Entity
+/**
+ * Represents a Student entity that maps to the "students" table in the database.
+ */
+@Entity // Marks this class as a JPA entity (will be stored in the database)
+@Table(name = "students") // Defines the table name as "students"
+@Data // Lombok annotation that automatically generates getters, setters, toString, equals, and hashCode
+@NoArgsConstructor // Generates a no-argument constructor
+@AllArgsConstructor // Generates a constructor with all fields
 public class StudentEntity {
 
-    // Primary key of the table
-    @Id
-    @GeneratedValue(strategy = GenerationType.AUTO) // Auto-increment ID
-    private long id;
+    @Id // Marks 'id' as the primary key
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    // Auto-generates the ID value (database auto-increment)
+    private Long id;
 
-    // Other fields/columns of the table
-    private String studentName;
-    private int grade;
-    private String gender;
+    // Stores the student's full name
+    private String name;
 
-    // Parameterized constructor (used when we want to create an object with values)
-    public StudentEntity(String gender, String studentName, long id, int grade) {
-        this.gender = gender;
-        this.studentName = studentName;
-        this.id = id;
-        this.grade = grade;
-    }
+    // Stores the student's address
+    private String address;
 
-    // Default constructor (required by JPA)
-    public StudentEntity() {
-    }
-
-    // Getters and setters → allow access to private fields
-    public String getStudentName() {
-        return studentName;
-    }
-
-    public void setStudentName(String studentName) {
-        this.studentName = studentName;
-    }
-
-    public long getId() {
-        return id;
-    }
-
-    public void setId(long id) {
-        this.id = id;
-    }
-
-    public int getGrade() {
-        return grade;
-    }
-
-    public void setGrade(int grade) {
-        this.grade = grade;
-    }
-
-    public String getGender() {
-        return gender;
-    }
-
-    public void setGender(String gender) {
-        this.gender = gender;
-    }
+    // Stores the student's email address
+    private String email;
 }
